@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Incremental Caesar Cipher Tool</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #f9f9f9;
+      padding: 50px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      color: #2c3e50;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+      padding: 30px;
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card h2 {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      color: #1c1c1c;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+
+    textarea {
+      margin-bottom: 20px;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      min-height: 100px;
+      background-color: #fcfcfc;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #4682b4;
+    }
+
+    button {
+      align-self: flex-start;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #4682b4;
+      color: white;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #315f7c;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Incremental Caesar Cipher</h1>
+
+  <div class="main-container">
+    <div class="card">
+      <h2>Encode</h2>
+      <label for="encodeInput">Original Text:</label>
+      <textarea id="encodeInput" placeholder="Enter your message here..."></textarea>
+      <button onclick="encode()">Encode</button>
+      <label for="encodedResult" style="margin-top: 20px;">Encoded Output:</label>
+      <textarea id="encodedResult" readonly placeholder="Encoded text appears here..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2>Decode</h2>
+      <label for="decodeInput">Encoded Text:</label>
+      <textarea id="decodeInput" placeholder="Paste encoded message here..."></textarea>
+      <button onclick="decode()">Decode</button>
+      <label for="decodedResult" style="margin-top: 20px;">Decoded Output:</label>
+      <textarea id="decodedResult" readonly placeholder="Decoded text appears here..."></textarea>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Caesar Cipher Tool | Designed for clarity and security
+  </footer>
+
+  <script>
+    function encode() {
+      const input = document.getElementById('encodeInput').value;
+      let result = '';
+      let shift = 1;
+
+      for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+
+        if (char.match(/[a-zA-Z]/)) {
+          const isUpper = char === char.toUpperCase();
+          const base = isUpper ? 65 : 97;
+          const originalPos = char.charCodeAt(0) - base;
+          const newPos = (originalPos + shift) % 26;
+          result += String.fromCharCode(newPos + base);
+          shift++;
+        } else {
+          result += char;
+        }
+      }
+
+      document.getElementById('encodedResult').value = result;
+    }
+
+    function decode() {
+      const input = document.getElementById('decodeInput').value;
+      let result = '';
+      let shift = 1;
+
+      for (let i = 0; i < input.length; i++) {
+        const char = input[i];
+
+        if (char.match(/[a-zA-Z]/)) {
+          const isUpper = char === char.toUpperCase();
+          const base = isUpper ? 65 : 97;
+          const originalPos = char.charCodeAt(0) - base;
+          const newPos = (originalPos - shift + 26) % 26;
+          result += String.fromCharCode(newPos + base);
+          shift++;
+        } else {
+          result += char;
+        }
+      }
+
+      document.getElementById('decodedResult').value = result;
+    }
+  </script>
+
+</body>
+</html>
